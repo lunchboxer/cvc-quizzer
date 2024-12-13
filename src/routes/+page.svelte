@@ -2,6 +2,8 @@
   import { cvcWords } from "$lib/words.js";
   import { flip } from "svelte/animate";
   import { quintOut } from "svelte/easing";
+  import { onMount } from 'svelte';
+  import '../app.css';
 
   // Create an array of integers from 11-20
   const numbers = Array.from({ length: 10 }, (_, i) => i + 11).sort(
@@ -22,9 +24,27 @@
 
   let score = 0;
   let cardIndex;
+  let isDarkMode = false;
+
+  // Check system preference on mount
+  onMount(() => {
+    isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    updateTheme();
+  });
+
+  function toggleTheme() {
+    isDarkMode = !isDarkMode;
+    updateTheme();
+  }
+
+  function updateTheme() {
+    document.documentElement.classList.toggle('dark-mode', isDarkMode);
+  }
 
   function toggleCard(index) {
-    if (cardIndex !== undefined) return;
+    // Prevent flipping if the card is already answered or another card is being evaluated
+    if (cards[index].isAnswered || cardIndex !== undefined) return;
+    
     cards[index].isFlipped = !cards[index].isFlipped;
     cardIndex = index;
     cards = cards;
@@ -49,12 +69,7 @@
   <h1>CVC Quizzer</h1>
   <div class="game-container">
     <div class="score">Score: {score}</div>
-    <div
-      class="card-grid"
-      role="grid"
-      aria-label="CVC Word Game Grid"
-      aria-describedby="game-instructions"
-    >
+    <div class="card-grid">
       {#each cards as card, index (card.word)}
         <div
           class="card"
@@ -63,7 +78,7 @@
           tabindex="0"
           class:flipped={card.isFlipped}
           class:correct={card.isCorrect === true}
-          class:incorrect={cards[index].isCorrect === false}
+          class:incorrect={card.isCorrect === false}
           on:click={() => toggleCard(index)}
           on:keydown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -104,23 +119,35 @@
       score points.
     </div>
   </div>
+  <div class="theme-toggle">
+    <button on:click={toggleTheme}>
+      {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+    </button>
+  </div>
 </main>
 
 <style>
   :root {
     --success-color: #689f38;
     --failure-color: #d32f2f;
+    --button-bg: #f0f0f0;
+    --button-text: #333;
+    --button-hover-bg: #ccc;
   }
+
   h1 {
     font-weight: inherit;
   }
+
   main {
     padding: 2rem;
   }
+
   .game-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
   }
 
   .score {
@@ -143,9 +170,9 @@
     cursor: pointer;
     height: 10rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
     transition: transform 0.2s;
+    background-color: var(--card-bg);
+    color: var(--text-color);
   }
 
   .card:hover {
@@ -174,7 +201,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
     backface-visibility: hidden;
   }
 
@@ -206,30 +232,48 @@
     margin-top: 1rem;
   }
 
-  .right-btn,
-  .wrong-btn {
+  .answer-buttons button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
+    color: var(--answer-button-text);
+    border-radius: 4px;
     transition: background-color 0.3s;
   }
 
-  .right-btn {
-    background-color: lightgreen;
+  .answer-buttons button:hover {
+    background-color: var(--button-hover-bg);
   }
-
   .wrong-btn {
-    background-color: lightcoral;
-  }
-
-  .right-btn:hover {
-    background-color: var(--success-color);
-  }
-
-  .wrong-btn:hover {
     background-color: var(--failure-color);
+    border-color: var(--failure-color);
+  }
+  .right-btn {
+    background-color: var(--success-color);
+    color: var(--button-text);
+    border-color: var(--success-color);
+  }
+
+  .theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+  }
+
+  .theme-toggle button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: 1px solid var(--card-border);
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .theme-toggle button:hover {
+    background-color: var(--button-hover-bg);
   }
 
   .sr-only {
