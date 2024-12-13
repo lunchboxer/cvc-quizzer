@@ -2,8 +2,8 @@
   import { cvcWords } from "$lib/words.js";
   import { flip } from "svelte/animate";
   import { quintOut } from "svelte/easing";
-  import { onMount } from 'svelte';
-  import '../app.css';
+  import { onMount } from "svelte";
+  import "../app.css";
 
   // Create an array of integers from 11-20
   const numbers = Array.from({ length: 10 }, (_, i) => i + 11).sort(
@@ -28,7 +28,7 @@
 
   // Check system preference on mount
   onMount(() => {
-    isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
     updateTheme();
   });
 
@@ -38,13 +38,13 @@
   }
 
   function updateTheme() {
-    document.documentElement.classList.toggle('dark-mode', isDarkMode);
+    document.documentElement.classList.toggle("dark-mode", isDarkMode);
   }
 
   function toggleCard(index) {
     // Prevent flipping if the card is already answered or another card is being evaluated
     if (cards[index].isAnswered || cardIndex !== undefined) return;
-    
+
     cards[index].isFlipped = !cards[index].isFlipped;
     cardIndex = index;
     cards = cards;
@@ -121,20 +121,12 @@
   </div>
   <div class="theme-toggle">
     <button on:click={toggleTheme}>
-      {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+      {isDarkMode ? "Light Mode" : "Dark Mode"}
     </button>
   </div>
 </main>
 
 <style>
-  :root {
-    --success-color: #689f38;
-    --failure-color: #d32f2f;
-    --button-bg: #f0f0f0;
-    --button-text: #333;
-    --button-hover-bg: #ccc;
-  }
-
   h1 {
     font-weight: inherit;
   }
@@ -171,7 +163,6 @@
     height: 10rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
-    background-color: var(--card-bg);
     color: var(--text-color);
   }
 
@@ -205,24 +196,26 @@
   }
 
   .card-front {
-    background-color: #444;
-    color: white;
+    background-color: var(--card-bg);
+    color: var(--text-color);
     font-size: 3rem;
   }
 
   .card-back {
-    background-color: #999;
-    color: black;
+    background-color: var(--card-bg-alt);
+    color: var(--text-color);
     font-size: 3rem;
     transform: rotateY(180deg);
   }
 
   .card.correct .card-back {
     background-color: var(--success-color);
+    color: var(--answer-button-text);
   }
 
   .card.incorrect .card-back {
     background-color: var(--failure-color);
+    color: var(--answer-button-text);
   }
 
   .answer-buttons {
@@ -269,7 +262,9 @@
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
   }
 
   .theme-toggle button:hover {

@@ -3,10 +3,11 @@
   --bg-color: #ffffff;
   --text-color: #000000;
   --card-bg: #f0f0f0;
+  --card-bg-alt: #e0e0e0;
   --card-border: #cccccc;
   --success-color: #689f38;
   --failure-color: #d32f2f;
-  
+
   /* Button colors */
   --button-bg: #e0e0e0;
   --button-text: #000000;
@@ -19,10 +20,11 @@
   --bg-color: #121212;
   --text-color: #ffffff;
   --card-bg: #1e1e1e;
+  --card-bg-alt: #2e2e2e;
   --card-border: #444444;
   --success-color: #8bc34a;
   --failure-color: #f44336;
-  
+
   /* Button colors */
   --button-bg: #333333;
   --button-text: #ffffff;
@@ -30,7 +32,8 @@
   --answer-button-text: #000;
 }
 
-html, body {
+html,
+body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
