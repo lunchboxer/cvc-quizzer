@@ -9,7 +9,7 @@
 <div class="card-grid">
   {#each cards as card, index (card.word)}
     <div
-      class="card"
+      class="card {card.isCorrect ? 'correct-animation' : ''}"
       role="gridcell"
       aria-label={`Card ${index + 1}: Number ${card.number}`}
       tabindex="0"
@@ -102,6 +102,29 @@
     background-color: var(--failure-color);
     color: var(--answer-button-text);
   }
+
+  .correct-animation {
+    animation: flip 0.6s ease;
+  }
+
+  @keyframes flip {
+    0% {
+      transform: rotateY(0);
+    }
+    25% {
+      transform: rotateY(180deg);
+    }
+    50% {
+      transform: rotateY(0);
+    }
+    75% {
+      transform: rotateY(180deg);
+    }
+    100% {
+      transform: rotateY(0);
+    }
+  }
+
   @media (min-width: 640px) {
     .card-grid {
       gap: 1rem;

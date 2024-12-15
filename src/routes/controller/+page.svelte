@@ -29,6 +29,17 @@
     publishState()
   }
 
+  const resetGame = () => {
+    const channel = `${channelPrefix}-${code.toUpperCase()}`
+    client.publish(
+      `${channel}/reset`,
+      JSON.stringify({
+        type: 'reset',
+        message: 'reset',
+      }),
+    )
+  }
+
   const togglerightwrong = () => {
     if (isConnected) {
       publishState()
@@ -132,6 +143,7 @@
     {/if}
     <div class="connect-form">
       {#if isConnected}
+        <button on:click={resetGame}>Reset Game</button>
         <button on:click={disconnect}>Disconnect from {code.toUpperCase()}</button>
       {:else}
         <label for="code">Game Code:</label>
@@ -171,6 +183,7 @@
     justify-content: space-between;
     width: 100%;
     align-items: baseline;
+    flex-wrap: wrap;
   }
   .connect-form {
     margin: 2rem 0;

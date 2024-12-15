@@ -7,23 +7,6 @@
   import mqtt from 'mqtt'
   import { channelPrefix, mqttUrl } from '$lib/constants'
 
-  // Create an array of integers from 11-20
-  const numbers = Array.from({ length: 10 }, (_, index) => index + 11).sort(
-    () => 0.5 - Math.random(),
-  )
-
-  // Shuffle the CVC words and numbers, taking the first 9 of each
-  let cards = cvcWords
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 9)
-    .map((word, index) => ({
-      word,
-      number: numbers[index],
-      isFlipped: false,
-      isAnswered: false,
-      isCorrect: undefined,
-    }))
-
   let score = 0
   let cardIndex
   let showRightWrong = true
@@ -32,6 +15,28 @@
   console.log(`Game Code: ${gameCode}`)
   const connectedControllers = new SvelteSet()
   let client
+  let cards = []
+
+  function shuffleCards() {
+    // Create an array of integers from 11-20
+    const numbers = Array.from({ length: 10 }, (_, index) => index + 11).sort(
+      () => 0.5 - Math.random(),
+    )
+
+    // Shuffle the CVC words and numbers, taking the first 9 of each
+    cards = cvcWords
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 9)
+      .map((word, index) => ({
+        word,
+        number: numbers[index],
+        isFlipped: false,
+        isAnswered: false,
+        isCorrect: undefined,
+      }))
+  }
+
+  shuffleCards()
 
   // Connect to MQTT broker
   onMount(() => {
@@ -69,6 +74,9 @@
           showRightWrong = data.showRightWrong
           cardIndex = data.cardIndex
         }
+        if (data.type === 'reset') {
+          resetGame()
+        }
       } catch (error) {
         console.error('Error parsing message:', error)
       }
@@ -80,6 +88,13 @@
       }
     }
   })
+
+  function resetGame() {
+    shuffleCards()
+    score = 0
+    cardIndex = undefined
+    publishState()
+  }
 
   function toggleCard(index) {
     // Prevent flipping if the card is already answered or another card is being evaluated
@@ -124,6 +139,7 @@
     <div class="score">Score: {score}</div>
     <p>Game Code: {gameCode}</p>
     <p>Connected Controllers: {connectedControllers.size}</p>
+    <button on:click={resetGame}>Reset Game</button>
   </div>
   <div class="grid-container">
     {#if cardIndex !== undefined && showRightWrong}
