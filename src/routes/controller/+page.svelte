@@ -90,9 +90,17 @@
   }
 
   function disconnect() {
-    client.end()
     cards = []
     isConnected = false
+    const channel = `${channelPrefix}-${code.toUpperCase()}`
+    client.publish(
+      `${channel}/disconnect`,
+      JSON.stringify({
+        type: 'disconnect',
+        message: 'disconnect',
+      }),
+    )
+    client.end()
   }
   async function connectToGame() {
     if (code.length !== 4) {
@@ -161,7 +169,7 @@
           type="text"
           bind:value={code}
           maxlength="4"
-          on:input={(e) => updateCode(e.target.value)}
+          on:input={(event) => updateCode(event.target.value)}
         />
         <button on:click={connectToGame}>Connect</button>
       {/if}
@@ -174,10 +182,10 @@
 
   {#if cards.length > 0}
     <div class="grid-container">
+      <CardGrid {cards} {toggleCard} {cardIndex} />
       {#if cardIndex !== undefined}
         <AnswerButtons {cardIndex} {evaluateAnswer} />
       {/if}
-      <CardGrid {cards} {toggleCard} />
     </div>
   {/if}
 </main>
@@ -213,11 +221,8 @@
   .grid-container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-    position: fixed;
-    bottom: 1rem;
     width: calc(100% - 6rem);
   }
   label {

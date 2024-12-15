@@ -51,6 +51,9 @@
             }),
           )
         }
+        if (data.type === 'disconnect') {
+          showRightWrong = true
+        }
 
         if (data.type === 'state') {
           cards = data.cards
@@ -141,8 +144,8 @@
 
 <main>
   <div class="game-info">
+    <p class="game-code">Game Code: {gameCode}</p>
     <div class="score">Score: {score}</div>
-    <p>Game Code: {gameCode}</p>
     <button on:click={resetGame}>Reset Game</button>
   </div>
   <div class="grid-container">
@@ -173,19 +176,20 @@
     justify-content: space-between;
     align-items: baseline;
   }
+  .game-code {
+    opacity: 0.5;
+  }
   .grid-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-    position: fixed;
-    bottom: 1rem;
     width: calc(100% - 6rem);
   }
   .score {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 3rem;
+    margin-bottom: 2rem;
   }
 
   .sr-only {

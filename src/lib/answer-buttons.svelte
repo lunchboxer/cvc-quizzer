@@ -9,14 +9,14 @@
     aria-label="Mark as Correct"
     on:click|stopPropagation={() => evaluateAnswer(cardIndex, true)}
   >
-    Right
+    right
   </button>
   <button
     class="wrong-btn"
     aria-label="Mark as Incorrect"
     on:click|stopPropagation={() => evaluateAnswer(cardIndex, false)}
   >
-    Wrong
+    wrong
   </button>
 </div>
 
@@ -42,7 +42,7 @@
   }
   .right-btn {
     background-color: var(--success-color);
-    color: var(--button-text);
+    /* color: var(--button-text); */
     border-color: var(--success-color);
   }
 </style>

@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte'
+  import Footer from '$lib/footer.svelte'
   import { Fa } from 'svelte-fa'
   import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
   import '../app.css'
@@ -25,6 +26,7 @@
   <button on:click={toggleTheme}><Fa icon={isDarkMode ? faSun : faMoon} /></button>
 </header>
 <slot />
+<Footer />
 
 <style>
   h1 {
