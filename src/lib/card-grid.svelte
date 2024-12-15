@@ -4,6 +4,7 @@
 
   export let cards = []
   export let toggleCard
+  export let cardIndex
 </script>
 
 <div class="card-grid">
@@ -13,6 +14,7 @@
       role="gridcell"
       aria-label={`Card ${index + 1}: Number ${card.number}`}
       tabindex="0"
+      class:selected={cardIndex === index}
       class:flipped={card.isFlipped}
       class:correct={card.isCorrect === true}
       class:incorrect={card.isCorrect === false}
@@ -79,17 +81,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    backface-visibility: hidden;
-  }
-
-  .card-front {
     background-color: var(--card-bg);
+    backface-visibility: hidden;
     color: var(--text-color);
   }
 
   .card-back {
-    background-color: var(--card-bg-alt);
-    color: var(--text-color);
+    /* background-color: var(--card-bg-alt); */
+    /* color: var(--card-color-alt); */
     transform: rotateY(180deg);
   }
 
@@ -104,9 +103,17 @@
   }
 
   .correct-animation {
-    animation: flip 0.6s ease;
+    animation: flip 0.4s ease;
+    animation-delay: 0.3s;
   }
 
+  .selected {
+    /* border: 2px solid yellow; */
+    transform: scale(1.5);
+    transition-delay: 0.5s;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
   @keyframes flip {
     0% {
       transform: rotateY(0);

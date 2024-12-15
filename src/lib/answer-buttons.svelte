@@ -29,6 +29,7 @@
   }
   .answer-buttons button {
     color: var(--answer-button-text);
+    padding: 1rem 3rem;
   }
 
   .answer-buttons button:hover {

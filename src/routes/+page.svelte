@@ -1,6 +1,5 @@
 <script>
   import { cvcWords } from '$lib/words.js'
-  import { SvelteSet } from 'svelte/reactivity'
   import CardGrid from '$lib/card-grid.svelte'
   import AnswerButtons from '$lib/answer-buttons.svelte'
   import { onMount } from 'svelte'
@@ -13,7 +12,6 @@
   const gameCode = Math.random().toString(36).slice(2, 6).toUpperCase()
   const channel = `${channelPrefix}-${gameCode}`
   console.log(`Game Code: ${gameCode}`)
-  const connectedControllers = new SvelteSet()
   let client
   let cards = []
 
@@ -52,7 +50,6 @@
         const data = JSON.parse(message.toString())
         console.log('Received message:', data, topic)
         if (data.type === 'connect') {
-          connectedControllers.add(data.clientId)
           // Echo back the connection
           client.publish(
             `${channel}/connect`,
@@ -138,14 +135,13 @@
   <div class="game-info">
     <div class="score">Score: {score}</div>
     <p>Game Code: {gameCode}</p>
-    <p>Connected Controllers: {connectedControllers.size}</p>
     <button on:click={resetGame}>Reset Game</button>
   </div>
   <div class="grid-container">
     {#if cardIndex !== undefined && showRightWrong}
       <AnswerButtons {cardIndex} {evaluateAnswer} />
     {/if}
-    <CardGrid {cards} {toggleCard} />
+    <CardGrid {cards} {toggleCard} {cardIndex} />
     <div id="game-instructions" class="sr-only">
       Flip cards to reveal CVC words. Evaluate each word as right or wrong to score points.
     </div>
