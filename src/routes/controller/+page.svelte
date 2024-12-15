@@ -150,8 +150,10 @@
         <input type="text" bind:value={code} maxlength="4" />
         <button on:click={connectToGame}>Connect</button>
       {/if}
-      <input type="checkbox" bind:checked={showRightWrong} on:change={togglerightwrong} />
-      <label for="showRightWrong">Show Right/Wrong</label>
+      <div class="form-wrapper">
+        <input type="checkbox" bind:checked={showRightWrong} on:change={togglerightwrong} />
+        <label for="showRightWrong">Show Right/Wrong</label>
+      </div>
     </div>
   </div>
 
@@ -188,6 +190,7 @@
   .connect-form {
     margin: 2rem 0;
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
   }

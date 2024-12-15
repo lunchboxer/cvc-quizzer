@@ -24,6 +24,7 @@
   "dependencies": {
     "@biomejs/biome": "^1.9.4",
     "@eslint/js": "^9.17.0",
+    "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@types/eslint": "^9.6.1",
     "eslint": "^9.17.0",
     "eslint-plugin-promise": "^7.2.1",
@@ -33,6 +34,7 @@
     "globals": "^15.13.0",
     "mqtt": "^5.10.3",
     "prettier": "^3.4.2",
-    "prettier-plugin-svelte": "^3.3.2"
+    "prettier-plugin-svelte": "^3.3.2",
+    "svelte-fa": "^4.0.3"
   }
 }
