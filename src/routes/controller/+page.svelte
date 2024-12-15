@@ -183,10 +183,10 @@
   {#if cards.length > 0}
     <div class="grid-container">
       <CardGrid {cards} {toggleCard} {cardIndex} />
-      {#if cardIndex !== undefined}
-        <AnswerButtons {cardIndex} {evaluateAnswer} />
-      {/if}
     </div>
+    {#if cardIndex !== undefined}
+      <AnswerButtons {cardIndex} {evaluateAnswer} />
+    {/if}
   {/if}
 </main>
 
@@ -224,6 +224,7 @@
     flex-direction: column;
     align-items: center;
     width: calc(100% - 6rem);
+    margin-bottom: 2rem;
   }
   label {
     padding: 0.5rem;

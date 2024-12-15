@@ -55,10 +55,6 @@
     color: var(--text-color);
   }
 
-  .card:hover {
-    transform: scale(1.05);
-  }
-
   .card-inner {
     position: relative;
     width: 100%;
@@ -88,6 +84,7 @@
 
   .card-back {
     transform: rotateY(180deg);
+    cursor: default;
   }
 
   .card.correct .card-back {
@@ -107,7 +104,7 @@
 
   .selected {
     /* border: 2px solid yellow; */
-    transform: scale(1.5);
+    transform: scale(1.2);
     transition-delay: 0.5s;
     z-index: 10;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

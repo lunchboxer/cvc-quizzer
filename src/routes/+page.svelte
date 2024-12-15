@@ -149,12 +149,14 @@
     <button on:click={resetGame}>Reset Game</button>
   </div>
   <div class="grid-container">
-    {#if cardIndex !== undefined && showRightWrong}
-      <AnswerButtons {cardIndex} {evaluateAnswer} />
-    {/if}
-    <CardGrid {cards} {toggleCard} {cardIndex} />
-    <div id="game-instructions" class="sr-only">
-      Flip cards to reveal CVC words. Evaluate each word as right or wrong to score points.
+    <div class="left-spacer"></div>
+    <div class="centered">
+      <CardGrid {cards} {toggleCard} {cardIndex} />
+    </div>
+    <div class="remaining">
+      {#if cardIndex !== undefined && showRightWrong}
+        <AnswerButtons {cardIndex} {evaluateAnswer} />
+      {/if}
     </div>
   </div>
 </main>
@@ -181,28 +183,32 @@
   }
   .grid-container {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     width: calc(100% - 6rem);
+  }
+  .left-spacer {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+
+  .centered {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+  }
+  .remaining {
+    flex-grow: 1;
+    flex-basis: 0;
   }
   .score {
     font-size: 3rem;
     margin-bottom: 2rem;
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
   @media (min-width: 640px) {
     main {
       padding-bottom: 2rem;
