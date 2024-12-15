@@ -186,6 +186,13 @@
         <button on:click={pullState}><Fa icon={faRepeat} /></button>
         <button on:click={publishState}><Fa icon={faPaperPlane} /></button>
         <button on:click={disconnect}><Fa icon={faPlugCircleXmark} /></button>
+        <button on:click={togglerightwrong}>
+          {#if showRightWrong}
+            hide buttons
+          {:else}
+            show buttons
+          {/if}
+        </button>
       {:else}
         <label for="code">Game Code:</label>
         <input
@@ -196,13 +203,6 @@
         />
         <button on:click={connectToGame}>Connect</button>
       {/if}
-      <button on:click={togglerightwrong}>
-        {#if showRightWrong}
-          hide buttons
-        {:else}
-          show buttons
-        {/if}
-      </button>
     </div>
   </div>
 
