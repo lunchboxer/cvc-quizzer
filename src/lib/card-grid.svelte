@@ -87,8 +87,6 @@
   }
 
   .card-back {
-    /* background-color: var(--card-bg-alt); */
-    /* color: var(--card-color-alt); */
     transform: rotateY(180deg);
   }
 

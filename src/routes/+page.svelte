@@ -9,35 +9,22 @@
   let score = 0
   let cardIndex
   let showRightWrong = true
-  const gameCode = Math.random().toString(36).slice(2, 6).toUpperCase()
-  const channel = `${channelPrefix}-${gameCode}`
-  console.log(`Game Code: ${gameCode}`)
+  let gameCode = ''
+  let channel
   let client
   let cards = []
 
-  function shuffleCards() {
-    // Create an array of integers from 11-20
-    const numbers = Array.from({ length: 10 }, (_, index) => index + 11).sort(
-      () => 0.5 - Math.random(),
-    )
-
-    // Shuffle the CVC words and numbers, taking the first 9 of each
-    cards = cvcWords
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 9)
-      .map((word, index) => ({
-        word,
-        number: numbers[index],
-        isFlipped: false,
-        isAnswered: false,
-        isCorrect: undefined,
-      }))
-  }
-
-  shuffleCards()
-
-  // Connect to MQTT broker
   onMount(() => {
+    const storedGameCode = localStorage.getItem('gameCode')
+    if (storedGameCode) {
+      gameCode = storedGameCode
+    } else {
+      gameCode = Math.random().toString(36).slice(2, 6).toUpperCase()
+      localStorage.setItem('gameCode', gameCode)
+    }
+    channel = `${channelPrefix}-${gameCode}`
+    console.log(`Game Code: ${gameCode}`)
+
     client = mqtt.connect(mqttUrl)
 
     client.on('connect', () => {
@@ -85,6 +72,27 @@
       }
     }
   })
+
+  function shuffleCards() {
+    // Create an array of integers from 11-20
+    const numbers = Array.from({ length: 10 }, (_, index) => index + 11).sort(
+      () => 0.5 - Math.random(),
+    )
+
+    // Shuffle the CVC words and numbers, taking the first 9 of each
+    cards = cvcWords
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 9)
+      .map((word, index) => ({
+        word,
+        number: numbers[index],
+        isFlipped: false,
+        isAnswered: false,
+        isCorrect: undefined,
+      }))
+  }
+
+  shuffleCards()
 
   function resetGame() {
     shuffleCards()

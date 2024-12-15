@@ -14,6 +14,24 @@
   let score = 0
   let showRightWrong = false
 
+  onMount(() => {
+    const storedCode = localStorage.getItem('code')
+    if (storedCode) {
+      code = storedCode
+      connectToGame()
+    }
+    return () => {
+      if (client) {
+        client.end()
+      }
+    }
+  })
+
+  function updateCode(newCode) {
+    code = newCode
+    localStorage.setItem('code', code)
+  }
+
   const evaluateAnswer = (index, isCorrect) => {
     if (cards[index].isAnswered) return
 
@@ -125,14 +143,6 @@
       console.error('Connection error: ' + error.message)
     })
   }
-
-  onMount(() => {
-    return () => {
-      if (client) {
-        client.end()
-      }
-    }
-  })
 </script>
 
 <main>
@@ -147,7 +157,12 @@
         <button on:click={disconnect}>Disconnect from {code.toUpperCase()}</button>
       {:else}
         <label for="code">Game Code:</label>
-        <input type="text" bind:value={code} maxlength="4" />
+        <input
+          type="text"
+          bind:value={code}
+          maxlength="4"
+          on:input={(e) => updateCode(e.target.value)}
+        />
         <button on:click={connectToGame}>Connect</button>
       {/if}
       <div class="form-wrapper">
