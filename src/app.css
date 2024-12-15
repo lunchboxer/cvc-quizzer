@@ -44,13 +44,6 @@ body {
   padding: 0;
 }
 
-/* Ensure full page dark mode support */
-body * {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  border-color: var(--card-border);
-}
-
 button {
   background-color: var(--button-bg);
   color: var(--button-text);

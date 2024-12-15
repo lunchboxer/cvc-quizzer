@@ -4,6 +4,13 @@
   import { channelPrefix, mqttUrl } from '$lib/constants'
   import CardGrid from '$lib/card-grid.svelte'
   import AnswerButtons from '$lib/answer-buttons.svelte'
+  import Fa from 'svelte-fa'
+  import {
+    faRepeat,
+    faPaperPlane,
+    faPlugCircleXmark,
+    faBroom,
+  } from '@fortawesome/free-solid-svg-icons'
 
   let code = ''
   const clientId = 'controller_' + Math.random().toString(36).slice(2, 8)
@@ -59,9 +66,22 @@
   }
 
   const togglerightwrong = () => {
+    showRightWrong = !showRightWrong
     if (isConnected) {
       publishState()
     }
+  }
+
+  const pullState = () => {
+    const channel = `${channelPrefix}-${code.toUpperCase()}`
+    client.publish(
+      `${channel}/state`,
+      JSON.stringify({
+        type: 'pullState',
+        clientId,
+        message: 'pullState',
+      }),
+    )
   }
 
   const toggleCard = (index) => {
@@ -138,6 +158,7 @@
           cardIndex = data.cardIndex
         }
         if (data.type === 'state') {
+          if (data.clientId && data.clientId !== clientId) return
           cards = data.cards
           score = data.score
           cardIndex = data.cardIndex
@@ -161,8 +182,10 @@
     {/if}
     <div class="connect-form">
       {#if isConnected}
-        <button on:click={resetGame}>Reset Game</button>
-        <button on:click={disconnect}>Disconnect from {code.toUpperCase()}</button>
+        <button on:click={resetGame}><Fa icon={faBroom} /></button>
+        <button on:click={pullState}><Fa icon={faRepeat} /></button>
+        <button on:click={publishState}><Fa icon={faPaperPlane} /></button>
+        <button on:click={disconnect}><Fa icon={faPlugCircleXmark} /></button>
       {:else}
         <label for="code">Game Code:</label>
         <input
@@ -173,10 +196,13 @@
         />
         <button on:click={connectToGame}>Connect</button>
       {/if}
-      <div class="form-wrapper">
-        <input type="checkbox" bind:checked={showRightWrong} on:change={togglerightwrong} />
-        <label for="showRightWrong">Show Right/Wrong</label>
-      </div>
+      <button on:click={togglerightwrong}>
+        {#if showRightWrong}
+          hide buttons
+        {:else}
+          show buttons
+        {/if}
+      </button>
     </div>
   </div>
 

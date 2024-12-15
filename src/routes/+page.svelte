@@ -64,6 +64,9 @@
         if (data.type === 'reset') {
           resetGame()
         }
+        if (data.type === 'pullState') {
+          publishState(data.clientId)
+        }
       } catch (error) {
         console.error('Error parsing message:', error)
       }
@@ -128,7 +131,7 @@
     cardIndex = undefined
     publishState()
   }
-  const publishState = () => {
+  const publishState = (clientId) => {
     client.publish(
       `${channel}/state`,
       JSON.stringify({
@@ -137,6 +140,7 @@
         score,
         cardIndex,
         message: 'state',
+        clientId,
       }),
     )
   }
