@@ -46,6 +46,11 @@
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: baseline;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
+  }
+  @media (min-width: 640px) {
+    header {
+      padding: 1rem;
+    }
   }
 </style>

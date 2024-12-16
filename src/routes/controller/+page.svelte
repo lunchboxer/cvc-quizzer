@@ -218,7 +218,7 @@
 
 <style>
   main {
-    padding: 1rem;
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -237,11 +237,11 @@
     flex-wrap: wrap;
   }
   .connect-form {
-    margin: 2rem 0;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
+    margin-bottom: 4rem;
   }
 
   .grid-container {
