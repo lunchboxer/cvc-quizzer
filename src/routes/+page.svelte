@@ -209,8 +209,8 @@
     flex-basis: 0;
   }
   .score {
-    font-size: 3rem;
-    margin-bottom: 2rem;
+    font-size: 2rem;
+    margin-bottom: 1rem;
   }
 
   @media (min-width: 640px) {

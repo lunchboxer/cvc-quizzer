@@ -89,12 +89,12 @@
 
   .card.correct .card-back {
     background-color: var(--success-color);
-    color: var(--answer-button-text);
+    color: var(--text-color);
   }
 
   .card.incorrect .card-back {
     background-color: var(--failure-color);
-    color: var(--answer-button-text);
+    color: var(--text-color);
   }
 
   .correct-animation {
@@ -139,12 +139,9 @@
   }
   @media (min-width: 768px) {
     .card {
-      width: 13rem;
-      height: 13rem;
+      width: 12rem;
+      height: 12rem;
       font-size: 4rem;
-    }
-    .card-grid {
-      gap: 1.5rem;
     }
   }
 </style>

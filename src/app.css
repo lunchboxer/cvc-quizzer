@@ -2,12 +2,11 @@
   /* Light mode colors */
   --bg-color: #ffffff;
   --text-color: #000000;
-  --card-bg: #e0e0e0;
-  --card-bg-alt: #2e2e2e;
+  --card-bg: #bdbdbd;
   --card-color-alt: #fff;
   --card-border: #cccccc;
-  --success-color: #689f38;
-  --failure-color: #d32f2f;
+  --success-color: #a5d6a7;
+  --failure-color: #ef9a9a;
 
   /* Button colors */
   --button-bg: #e0e0e0;
@@ -20,12 +19,11 @@
   /* Dark mode colors */
   --bg-color: #121212;
   --text-color: #ffffff;
-  --card-bg: #1e1e1e;
-  --card-bg-alt: #e0e0e0;
+  --card-bg: #424242;
   --card-color-alt: #000;
   --card-border: #444444;
-  --success-color: #8bc34a;
-  --failure-color: #f44336;
+  --success-color: #2e7d32;
+  --failure-color: #c62828;
 
   /* Button colors */
   --button-bg: #333333;

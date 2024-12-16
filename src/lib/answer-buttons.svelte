@@ -28,14 +28,10 @@
     gap: 1rem;
   }
   .answer-buttons button {
-    color: var(--answer-button-text);
+    color: var(--text-color);
     padding: 1rem 3rem;
   }
 
-  .answer-buttons button:hover {
-    background-color: var(--button-hover-bg);
-    color: var(--button-text);
-  }
   .wrong-btn {
     background-color: var(--failure-color);
     border-color: var(--failure-color);
