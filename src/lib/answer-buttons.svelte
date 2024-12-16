@@ -29,16 +29,14 @@
   }
   .answer-buttons button {
     color: var(--text-color);
-    padding: 1rem 3rem;
+    padding: 1.5rem 4rem;
+    font-size: 1.2rem;
   }
 
   .wrong-btn {
     background-color: var(--failure-color);
-    border-color: var(--failure-color);
   }
   .right-btn {
     background-color: var(--success-color);
-    /* color: var(--button-text); */
-    border-color: var(--success-color);
   }
 </style>

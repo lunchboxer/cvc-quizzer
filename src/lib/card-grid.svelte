@@ -50,7 +50,7 @@
     font-size: 2rem;
     width: 6.4rem;
     height: 6.4rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
     transition: transform 0.2s;
     color: var(--text-color);
   }
@@ -77,8 +77,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--card-bg);
     backface-visibility: hidden;
+    background-color: var(--card-bg);
     color: var(--text-color);
   }
 
@@ -103,11 +103,16 @@
   }
 
   .selected {
-    /* border: 2px solid yellow; */
     transform: scale(1.2);
-    transition-delay: 0.5s;
+    transition: transform 0.3s 0.5s ease;
     z-index: 10;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s 0.3s ease;
+  }
+  .selected .card-inner .card-back {
+    border: 1px solid var(--text-color);
+    background-color: var(--selected-card-bg);
+    transition: background-color 0.3s ease;
   }
   @keyframes flip {
     0% {
